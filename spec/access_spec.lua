@@ -11,4 +11,16 @@ describe("Access", function()
         assert.is_false(subject.isNumbersOnly('123 Fake Street, FakeTown'))
     end)
 
+    describe("locationParam", function()
+        it("should retreive param", function()
+            local params = { location = "12345612" }
+            assert.are.same(subject.locationParam(params), "12345612")
+        end)
+
+        it("should handle no location param", function()
+            local params = {  }
+            assert.are.same(subject.locationParam(params), nil)
+        end)
+    end)
+
 end)

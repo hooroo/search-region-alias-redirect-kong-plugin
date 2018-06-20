@@ -1,7 +1,7 @@
 local _M = {}
 
-function locationParam(queryParamsTable)
-
+function _M.locationParam(queryParamsTable)
+    return queryParamsTable.location
 end
 
 function _M.isNumbersOnly(value)
@@ -10,7 +10,7 @@ end
 
 
 function _M.execute(conf)
-    location = locationParam(ngx.req.get_uri_args)
+    local location = locationParam(ngx.req.get_uri_args)
 
     if isNumbersOnly(location) then
         ngx.var.upstream_uri = conf.search_legacy_uri
