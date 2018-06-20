@@ -1,10 +1,10 @@
 local _M = {}
 
-local function locationParam(queryParamsTable)
+function locationParam(queryParamsTable)
 
 end
 
-local function isNumbersOnly(value)
+function _M.isNumbersOnly(value)
     return string.match(value, '^[0-9]+$') ~= nil
 end
 
@@ -19,18 +19,4 @@ function _M.execute(conf)
     end
 end
 
---return _M
-
-
-
-function test(scenario, value)
-    print(scenario .. ": " .. tostring(isNumbersOnly(value)))
-end
-
-test('text        ', "DPS")
-test('test-number ', "DPS123")
-test('address-number ', "DPS, somehwere, 123")
-test('numbers,number ', "123, 123")
-test('number-text ', "123DPS")
-test('6 dgiti     ', "123456")
-test('10 digit    ', "1234567980")
+return _M
