@@ -1,4 +1,4 @@
-DEV_ROCKS = busted luacheck
+DEV_ROCKS = busted luacheck kong
 
 .PHONY: install dev clean doc lint test coverage
 

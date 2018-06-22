@@ -8,7 +8,6 @@ function _M.isNumbersOnly(value)
     return string.match(value, '^[0-9]+$') ~= nil
 end
 
-
 function _M.execute(conf)
     local location = locationParam(ngx.req.get_uri_args)
 
