@@ -11,6 +11,7 @@ end
 function _M.execute(conf)
     local location = locationParam(ngx.req.get_uri_args())
 
+-- if no location param??? fail gracefully
     if isNotNumberic(location) then
         ngx.log(ngx.DEBUG, "Setting upstream host to: " .. conf.search_legacy_host)
         ngx.ctx.balancer_address.host = conf.search_legacy_host
@@ -20,3 +21,4 @@ function _M.execute(conf)
 end
 
 return _M
+
