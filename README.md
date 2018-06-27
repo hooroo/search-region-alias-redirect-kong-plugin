@@ -66,6 +66,10 @@ Note, that a fake API created was created using: `https://www.mockapi.io/` to be
 `$ curl -i -X GET   --url http://localhost:8000?location=ABCDEF   --header 'Host: example.com'`
 
 
+## Deploying your plugin
+
+Ask Scott to help
+
 ## Useful references
 
 - https://hub.docker.com/_/kong/
