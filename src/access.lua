@@ -1,18 +1,17 @@
 local _M = {}
 
-function locationParam(queryParamsTable)
-    return queryParamsTable.location
+function isNumeric(value)
+    return string.match(value, '^[0-9]+$') ~= nil
 end
 
-function isNotNumberic(value)
-    return string.match(value, '^[0-9]+$') == nil
+function isValid (value)
+    return value ~= nil and value ~= ''
 end
 
 function _M.execute(conf)
-    local location = locationParam(ngx.req.get_uri_args())
+    local location = ngx.req.get_uri_args().location
 
--- if no location param??? fail gracefully
-    if isNotNumberic(location) then
+    if isValid(location) and (not isNumeric(location)) then
         ngx.log(ngx.DEBUG, "Setting upstream host to: " .. conf.search_legacy_host)
         ngx.ctx.balancer_address.host = conf.search_legacy_host
         ngx.log(ngx.DEBUG, "Setting upstream path to: " .. conf.search_legacy_path)

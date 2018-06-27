@@ -1,25 +1,84 @@
-local subject = require "kong.plugins.search-region-alias-redirect.access"
+local access = require "../src/access"
 
-describe("Access", function()
-    it("isNumber", function()
-        assert.is_true(subject.isNumbersOnly('54354'))
-        assert.is_true(subject.isNumbersOnly('1234563131'))
-        assert.is_false(subject.isNumbersOnly('ACV54354'))
-        assert.is_false(subject.isNumbersOnly('acvb54354'))
-        assert.is_false(subject.isNumbersOnly('54aadsd'))
-        assert.is_false(subject.isNumbersOnly('54ASvcx'))
-        assert.is_false(subject.isNumbersOnly('123 Fake Street, FakeTown'))
+describe ("access" , function ()
+
+    local conf = {}
+    conf.search_legacy_host = "bili"
+    conf.search_legacy_path = "/availability"
+
+    before_each(function()
+        _G.ngx = {
+            req = {},
+            ctx = {
+                balancer_address = {
+                    host = "normal_server"
+                }
+            },
+            var = {
+                upstream_uri = "normal_path"
+            }
+        }
+        function ngx.log()
+            return
+        end
     end)
 
-    describe("locationParam", function()
-        it("should retreive param", function()
-            local params = { location = "12345612" }
-            assert.are.same(subject.locationParam(params), "12345612")
+    describe ("location param is region alias", function()
+        before_each(function()
+            function ngx.req.get_uri_args()
+                return { location = "DPS"}
+            end
         end)
+        it ("should forward request to search legacy app", function()
+            access.execute(conf)
 
-        it("should handle no location param", function()
-            local params = {  }
-            assert.are.same(subject.locationParam(params), nil)
+            assert.equal(ngx.ctx.balancer_address.host, "bili")
+            assert.equal(ngx.var.upstream_uri, "/availability")
+        end)
+    end)
+
+    describe ("location param is region ID", function()
+        before_each(function()
+            function ngx.req.get_uri_args()
+                return { location = "1234"}
+            end
+        end)
+        it ("should forward request to normal path", function()
+
+            access.execute(conf)
+
+            assert.equal(ngx.ctx.balancer_address.host, "normal_server")
+            assert.equal(ngx.var.upstream_uri, "normal_path")
+        end)
+    end)
+
+    describe ("no location param", function()
+        before_each(function()
+            function ngx.req.get_uri_args()
+                return { }
+            end
+        end)
+        it ("should forward request to normal path", function()
+
+            access.execute(conf)
+
+            assert.equal(ngx.ctx.balancer_address.host, "normal_server")
+            assert.equal(ngx.var.upstream_uri, "normal_path")
+        end)
+    end)
+
+    describe ("location param is nil", function()
+        before_each(function()
+            function ngx.req.get_uri_args()
+                return { location = ""}
+            end
+        end)
+        it ("should forward request to normal path", function()
+
+            access.execute(conf)
+
+            assert.equal(ngx.ctx.balancer_address.host, "normal_server")
+            assert.equal(ngx.var.upstream_uri, "normal_path")
         end)
     end)
 
