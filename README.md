@@ -65,3 +65,13 @@ Note, that a fake API created was created using: `https://www.mockapi.io/` to be
 
 `$ curl -i -X GET   --url http://localhost:8000?location=ABCDEF   --header 'Host: example.com'`
 
+
+## Useful references
+
+- https://hub.docker.com/_/kong/
+- https://docs.konghq.com/0.11.x/getting-started/adding-your-api/
+- https://docs.konghq.com/0.13.x/getting-started/configuring-a-service/
+- https://docs.konghq.com/0.13.x/getting-started/enabling-plugins/
+- https://github.com/Kong/kong/tree/master/kong/plugins/request-transformer
+- https://github.com/nvmlabs/kong-dynamic-upstream/blob/master/spec/access_spec.lua
+- http://olivinelabs.com/busted/#overview
