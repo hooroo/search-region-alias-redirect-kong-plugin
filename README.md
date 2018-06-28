@@ -44,7 +44,7 @@ Note, that a fake API created was created using: `https://www.mockapi.io/` to be
 
 1. Create the API
 
-curl -i -X POST --url http://localhost:8001/apis/ --data 'name=search-api' --data 'hosts=example.com' --data 'upstream_url=http://5b306993db0f5e001465b65c.mockapi.io/availability/ava'
+`$ curl -i -X POST --url http://localhost:8001/apis/ --data 'name=search-api' --data 'hosts=example.com' --data 'upstream_url=http://5b306993db0f5e001465b65c.mockapi.io/availability/ava'`
 
    `$ curl -i -X POST \
   --url http://localhost:8001/apis/ \
