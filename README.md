@@ -13,7 +13,7 @@ When query params:
 
 ### Install Lua
 
-Install Lua
+`brew install lua`
 
 ### Run the test 
 
@@ -43,6 +43,8 @@ From: https://docs.konghq.com/0.11.x/getting-started/adding-your-api/
 Note, that a fake API created was created using: `https://www.mockapi.io/` to be used as the upstream service. 
 
 1. Create the API
+
+curl -i -X POST --url http://localhost:8001/apis/ --data 'name=search-api' --data 'hosts=example.com' --data 'upstream_url=http://5b306993db0f5e001465b65c.mockapi.io/availability/ava'
 
    `$ curl -i -X POST \
   --url http://localhost:8001/apis/ \
